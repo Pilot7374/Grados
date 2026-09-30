@@ -49,3 +49,19 @@ CREATE TABLE subjects (
     PRIMARY KEY (subject_id),
     FOREIGN KEY (degree_id) REFERENCES degrees(degree_id)
 );
+CREATE TABLE groups (
+    group_id INT AUTO_INCREMENT,
+    subject_id INT NOT NULL,
+    group_name VARCHAR(40) NOT NULL,
+    activity VARCHAR(15) NOT NULL,
+    academic_year YEAR NOT NULL,
+    PRIMARY KEY (group_id),
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+);
+CREATE TABLE group_enrollments (
+    student_id INT,
+    group_id INT,
+    PRIMARY KEY (student_id, group_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (group_id) REFERENCES groups(group_id)
+);

@@ -93,3 +93,18 @@ INSERT INTO subjects (
     (15, 3, 'Introducción a la Ingeniería del Software y los Sistemas de Información II', 'IISSI-2', 6, 2, 'Obligatoria'),
     (16, 3, 'Sistemas Operativos', 'SO', 6, 2, 'Obligatoria'),
     (17, 3, 'Inteligencia Artificial', 'IA', 6, 2, 'Obligatoria');
+
+    INSERT INTO groups (group_id, subject_id, group_name, activity, academic_year) VALUES
+    (1, 11, 'T1', 'Teoría', 2024),
+    (2, 11, 'L1', 'Laboratorio', 2024),
+    (3, 11, 'L2', 'Laboratorio', 2024);
+
+INSERT INTO group_enrollments (student_id, group_id) VALUES
+    (6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
+    (11, 1), (12, 1), (13, 1), (14, 1), (15, 1),
+    (16, 1), (17, 1), (18, 1), (19, 1), (20, 1),
+    (21, 1), (22, 1), (23, 1), (24, 1), (25, 1),
+    (6, 2), (7, 2), (8, 2), (9, 2), (10, 2),
+    (11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
+    (16, 3), (17, 3), (18, 3), (19, 3), (20, 3),
+    (21, 3), (22, 3), (23, 3), (24, 3), (25, 3);
