@@ -26,3 +26,13 @@ INSERT INTO people (person_id, dni, first_name, last_name, age, email) VALUES
     (23, '10000023Y', 'Irene', 'Salas', 21, 'irene.salas@alum.us.es'),
     (24, '10000024Z', 'Álex', 'Delgado', 22, 'alex.delgado@alum.us.es'),
     (25, '10000025A', 'Paula', 'Bermejo', 21, 'paula.bermejo@alum.us.es');
+
+
+DELETE FROM professors;
+
+INSERT INTO professors (professor_id, category) VALUES
+    (1, 'Catedrático'),
+    (2, 'Titular'),
+    (3, 'AyudanteDoctor'),
+    (4, 'Titular'),
+    (5, 'Ayudante');
