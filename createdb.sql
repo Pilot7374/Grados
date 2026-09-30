@@ -65,3 +65,14 @@ CREATE TABLE group_enrollments (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (group_id) REFERENCES groups(group_id)
 );
+CREATE TABLE grades (
+    grade_id INT AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    group_id INT NOT NULL,
+    grade_value DECIMAL(4,2) NOT NULL,
+    exam_call VARCHAR(20) NOT NULL,
+    with_honors BOOLEAN NOT NULL DEFAULT 0,
+    PRIMARY KEY (grade_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (group_id) REFERENCES groups(group_id)
+);

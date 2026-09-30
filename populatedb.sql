@@ -108,3 +108,43 @@ INSERT INTO group_enrollments (student_id, group_id) VALUES
     (11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
     (16, 3), (17, 3), (18, 3), (19, 3), (20, 3),
     (21, 3), (22, 3), (23, 3), (24, 3), (25, 3);
+
+INSERT INTO grades (grade_id, student_id, group_id, grade_value, exam_call, with_honors) VALUES
+    -- Primera convocatoria: 10 aprobados (2 con MH), 10 suspensos
+    (1, 6, 1, 9.8, 'Primera', 1),
+    (2, 7, 1, 9.2, 'Primera', 1),
+    (3, 8, 1, 5.4, 'Primera', 0),
+    (4, 9, 1, 8.0, 'Primera', 0),
+    (5, 10, 1, 6.0, 'Primera', 0),
+    (6, 11, 1, 5.7, 'Primera', 0),
+    (7, 12, 1, 7.0, 'Primera', 0),
+    (8, 13, 1, 6.3, 'Primera', 0),
+    (9, 14, 1, 5.8, 'Primera', 0),
+    (10, 15, 1, 6.1, 'Primera', 0),
+    (11, 16, 1, 4.2, 'Primera', 0),
+    (12, 17, 1, 3.9, 'Primera', 0),
+    (13, 18, 1, 4.5, 'Primera', 0),
+    (14, 19, 1, 4.8, 'Primera', 0),
+    (15, 20, 1, 4.4, 'Primera', 0),
+    (16, 21, 1, 3.5, 'Primera', 0),
+    (17, 22, 1, 3.8, 'Primera', 0),
+    (18, 23, 1, 4.0, 'Primera', 0),
+    (19, 24, 1, 4.3, 'Primera', 0),
+    (20, 25, 1, 4.7, 'Primera', 0),
+    -- Segunda convocatoria
+    (21, 16, 1, 6.2, 'Segunda', 0),
+    (22, 17, 1, 5.8, 'Segunda', 0),
+    (23, 18, 1, 6.4, 'Segunda', 0),
+    (24, 19, 1, 5.9, 'Segunda', 0),
+    (25, 20, 1, 6.1, 'Segunda', 0),
+    (26, 21, 1, 4.6, 'Segunda', 0),
+    (27, 22, 1, 4.9, 'Segunda', 0),
+    (28, 23, 1, 4.7, 'Segunda', 0),
+    (29, 24, 1, 4.4, 'Segunda', 0),
+    (30, 25, 1, 4.3, 'Segunda', 0),
+    -- Tercera convocatoria
+    (31, 21, 1, 5.6, 'Tercera', 0),
+    (32, 22, 1, 5.9, 'Tercera', 0),
+    (33, 23, 1, 5.5, 'Tercera', 0),
+    (34, 24, 1, 6.0, 'Tercera', 0),
+    (35, 25, 1, 5.7, 'Tercera', 0);
