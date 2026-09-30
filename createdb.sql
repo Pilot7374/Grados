@@ -30,3 +30,22 @@ CREATE TABLE students (
     PRIMARY KEY (student_id),
     FOREIGN KEY (student_id) REFERENCES people(person_id)
 );
+
+CREATE TABLE degrees (
+    degree_id INT AUTO_INCREMENT,
+    degree_name VARCHAR(80) NOT NULL,
+    duration_years TINYINT NOT NULL,
+    PRIMARY KEY (degree_id)
+);
+
+CREATE TABLE subjects (
+    subject_id INT AUTO_INCREMENT,
+    degree_id INT NOT NULL,
+    subject_name VARCHAR(120) NOT NULL,
+    acronym VARCHAR(12) NOT NULL,
+    credits TINYINT NOT NULL,
+    course TINYINT NOT NULL,
+    subject_type VARCHAR(30) NOT NULL,
+    PRIMARY KEY (subject_id),
+    FOREIGN KEY (degree_id) REFERENCES degrees(degree_id)
+);
