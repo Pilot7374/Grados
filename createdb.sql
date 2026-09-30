@@ -22,3 +22,11 @@ CREATE TABLE professors (
     PRIMARY KEY (professor_id),
     FOREIGN KEY (professor_id) REFERENCES people(person_id)
 );
+
+
+CREATE TABLE students (
+    student_id INT,
+    access_method VARCHAR(20) NOT NULL,
+    PRIMARY KEY (student_id),
+    FOREIGN KEY (student_id) REFERENCES people(person_id)
+);
