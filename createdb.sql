@@ -83,3 +83,11 @@ CREATE TABLE subject_enrollments (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
 );
+CREATE TABLE teaching_loads (
+    professor_id INT,
+    group_id INT,
+    credits DECIMAL(4,1) NOT NULL,
+    PRIMARY KEY (professor_id, group_id),
+    FOREIGN KEY (professor_id) REFERENCES professors(professor_id),
+    FOREIGN KEY (group_id) REFERENCES groups(group_id)
+);
