@@ -60,6 +60,11 @@ CREATE TABLE degrees (
     PRIMARY KEY (degree_id)
 );
 
+ALTER TABLE degrees
+    ADD CONSTRAINT rn13_degree_duration CHECK (duration_years BETWEEN 3 AND 6),
+    ADD CONSTRAINT rn_uq_degrees_name UNIQUE (degree_name);
+
+
 CREATE TABLE subjects (
     subject_id INT AUTO_INCREMENT,
     degree_id INT NOT NULL,
