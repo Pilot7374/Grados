@@ -96,6 +96,15 @@ CREATE TABLE groups (
     PRIMARY KEY (group_id),
     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
 );
+
+ALTER TABLE groups
+    ADD CONSTRAINT rn15_groups_year CHECK (academic_year BETWEEN 2000 AND 2100),
+    ADD CONSTRAINT ck_groups_activity CHECK (
+        activity IN ('Teoría','Laboratorio')
+    ),
+    ADD CONSTRAINT rn_uq_groups_name UNIQUE (subject_id, group_name, academic_year);
+
+
 CREATE TABLE group_enrollments (
     student_id INT,
     group_id INT,
