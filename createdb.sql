@@ -47,6 +47,12 @@ CREATE TABLE students (
     FOREIGN KEY (student_id) REFERENCES people(person_id)
 );
 
+ALTER TABLE students
+    ADD CONSTRAINT ck_students_access_method CHECK (
+        access_method IN ('Selectividad','Ciclo','Mayor','Titulado','Extranjero')
+    );
+
+
 CREATE TABLE degrees (
     degree_id INT AUTO_INCREMENT,
     degree_name VARCHAR(80) NOT NULL,
