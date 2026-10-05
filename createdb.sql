@@ -10,7 +10,17 @@ CREATE TABLE people (
     PRIMARY KEY (person_id)
 );
 
+
 SET FOREIGN_KEY_CHECKS = 0;
+
+
+ALTER TABLE people
+    ADD CONSTRAINT rn12_people_age CHECK (age BETWEEN 16 AND 70),
+    ADD CONSTRAINT rn14_people_dni CHECK (dni REGEXP '^[0-9]{8}[A-Za-z]$'),
+    ADD CONSTRAINT rn_uq_people_dni UNIQUE (dni),
+    ADD CONSTRAINT rn_uq_people_email UNIQUE (email);
+
+"si se pone las restricciones de cero al crear la tabla seria sin alter ni add"
 
 DROP TABLE IF EXISTS professors;
 
