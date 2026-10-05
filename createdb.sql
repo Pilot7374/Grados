@@ -138,3 +138,7 @@ CREATE TABLE teaching_loads (
     FOREIGN KEY (professor_id) REFERENCES professors(professor_id),
     FOREIGN KEY (group_id) REFERENCES groups(group_id)
 );
+
+ALTER TABLE teaching_loads
+    ADD CONSTRAINT ck_teaching_loads_credits CHECK (credits > 0);
+
