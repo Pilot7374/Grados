@@ -33,6 +33,12 @@ CREATE TABLE professors (
     FOREIGN KEY (professor_id) REFERENCES people(person_id)
 );
 
+ALTER TABLE professors
+    ADD CONSTRAINT ck_professors_category CHECK (
+        category IN ('Ayudante','AyudanteDoctor','Titular','Catedrático')
+    );
+
+
 
 CREATE TABLE students (
     student_id INT,
