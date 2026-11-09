@@ -78,6 +78,7 @@ SELECT
 FROM students st
 JOIN people p ON st.student_id = p.person_id;
 
+--FUNCIONES AGREGADAS
 
 -- Consulta 7: Media de las notas del grupo con ID 1
 SELECT AVG(g.grade_value) AS average_grade
@@ -100,3 +101,26 @@ FROM grades g;
 -- Consulta 12: Mínima nota obtenida
 SELECT MIN(g.grade_value) AS min_grade
 FROM grades g;
+
+--FUNCIONES MULTIPLES
+
+-- Consulta 13: Notas con valor menor que 5 o mayor que 9
+SELECT g.grade_id, g.grade_value, g.exam_call
+FROM grades g
+WHERE g.grade_value < 5 OR g.grade_value > 9;
+
+-- Consulta 14: Notas entre 5 y 7 (inclusive)
+SELECT g.grade_id, g.grade_value, g.exam_call
+FROM grades g
+WHERE g.grade_value BETWEEN 5 AND 7;
+
+
+-- Consulta 15: Asignaturas de 6 o 12 créditos
+SELECT s.subject_name, s.credits
+FROM subjects s
+WHERE s.credits IN (6, 12);
+
+-- Consulta 16: Personas con edad entre 20 y 30 años
+SELECT p.first_name, p.last_name, p.age
+FROM people p
+WHERE p.age BETWEEN 20 AND 30;
