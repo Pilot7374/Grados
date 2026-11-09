@@ -124,3 +124,39 @@ WHERE s.credits IN (6, 12);
 SELECT p.first_name, p.last_name, p.age
 FROM people p
 WHERE p.age BETWEEN 20 AND 30;
+
+--DISTINT == SIN REPETICIONES
+
+-- Consulta 17: Nombres de grupos diferentes
+SELECT DISTINCT g.group_name 
+FROM groups g;
+
+-- Consulta 18: Tipos de asignatura diferentes
+SELECT DISTINCT s.subject_type
+FROM subjects s;
+
+-- Consulta 19: Años académicos registrados
+SELECT DISTINCT g.academic_year
+FROM groups g
+ORDER BY g.academic_year DESC; --ORDER BY = ordenado de forma descendente
+
+--SUBCONSULTAS
+
+-- Consulta 20: Máxima nota del estudiante con ID 6
+SELECT MAX(g.grade_value) AS max_grade
+FROM grades g
+WHERE g.student_id = 6;
+
+-- Consulta 21: IDs de estudiantes del año académico 2024
+SELECT DISTINCT ge.student_id
+FROM students_groups ge
+WHERE ge.group_id IN (
+    SELECT g.group_id 
+    FROM groups g 
+    WHERE g.academic_year = 2024
+);
+
+-- Consulta 22: Asignaturas con más créditos que la media
+SELECT s.subject_name, s.credits
+FROM subjects s
+WHERE s.credits > (SELECT AVG(credits) FROM subjects);

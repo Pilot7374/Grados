@@ -104,6 +104,16 @@ ALTER TABLE groups
     ),
     ADD CONSTRAINT rn_uq_groups_name UNIQUE (subject_id, group_name, academic_year);
 
+CREATE TABLE students_groups (
+    student_group_id INT AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    group_id INT NOT NULL,
+    PRIMARY KEY (student_group_id),
+    CONSTRAINT uq_students_groups UNIQUE (student_id, group_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (group_id) REFERENCES groups(group_id)
+);
+
 
 CREATE TABLE group_enrollments (
     student_id INT,
