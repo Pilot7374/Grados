@@ -205,3 +205,14 @@ JOIN students s ON s.student_id = g.student_id
 JOIN people p ON p.person_id = s.student_id
 WHERE g.group_id = 1 AND g.exam_call = 'Primera' AND g.with_honors = 1
 ORDER BY g.grade_value DESC;
+
+--USO DE LAS VISTAS
+-- Consulta 28: Total de matrículas de honor
+SELECT COUNT(*) AS total_honors
+FROM v_grades_with_honors;
+
+--AGREGACION SOBRE VISTAS
+-- Consulta 29: Nota media de cada estudiante
+SELECT v.first_name, v.last_name, AVG(v.grade_value) AS average_grade
+FROM v_student_grades v
+GROUP BY v.person_id, v.first_name, v.last_name;
