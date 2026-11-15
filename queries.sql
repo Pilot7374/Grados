@@ -310,3 +310,79 @@ SELECT g.grade_id, g.student_id, g.grade_value
 FROM grades g
 ORDER BY g.grade_value DESC
 LIMIT 5 OFFSET 10;
+--CRITERIOS MIXTOS
+-- Consulta 36: Grupos ordenados por año académico descendente
+SELECT g.group_name, g.activity, g.academic_year
+FROM groups g
+ORDER BY g.academic_year DESC, g.group_name ASC;
+
+--CONSULTAS AVANZADAS
+-- Consulta 37: Estudiantes con sus grupos (INNER JOIN)
+SELECT 
+    st.first_name,
+    st.last_name,
+    gr.group_name,
+    gr.activity,
+    gr.academic_year
+FROM v_students st
+JOIN students_groups ge ON st.student_id = ge.student_id
+JOIN groups gr ON ge.group_id = gr.group_id;
+-- Consulta 38: Asignaturas con información del grado
+SELECT 
+    d.degree_name,
+    s.subject_name,
+    s.acronym,
+    s.credits,
+    s.course,
+    s.subject_type
+FROM degrees d
+JOIN subjects s ON d.degree_id = s.degree_id
+ORDER BY d.degree_name, s.course;
+-- Consulta 39: Notas con nombre del estudiante y asignatura
+SELECT 
+    st.first_name,
+    st.last_name,
+    s.subject_name,
+    s.acronym,
+    g.grade_value,
+    g.exam_call,
+    gr.academic_year
+FROM grades g
+JOIN v_students st ON g.student_id = st.student_id
+JOIN groups gr ON g.group_id = gr.group_id
+JOIN subjects s ON gr.subject_id = s.subject_id;
+--JOIN CON VISTA
+-- Consulta 40: Profesores con grupos que imparten
+SELECT 
+    pr.first_name,
+    pr.last_name,
+    pr.category,
+    s.subject_name,
+    gr.group_name,
+    gr.activity,
+    tl.credits AS teaching_credits
+FROM v_professors pr
+JOIN teaching_loads tl ON pr.professor_id = tl.professor_id
+JOIN groups gr ON tl.group_id = gr.group_id
+JOIN subjects s ON gr.subject_id = s.subject_id;
+-- Consulta 41: Estudiantes matriculados en asignaturas (a través de grupos)
+SELECT DISTINCT
+    st.first_name,
+    st.last_name,
+    s.subject_name,
+    s.acronym,
+    gr.academic_year
+FROM v_students st
+JOIN students_groups ge ON st.student_id = ge.student_id
+JOIN groups gr ON ge.group_id = gr.group_id
+JOIN subjects s ON gr.subject_id = s.subject_id
+ORDER BY st.last_name, s.subject_name;
+-- Consulta 42: LEFT JOIN - Todos los estudiantes, con o sin notas
+SELECT 
+    st.first_name,
+    st.last_name,
+    g.grade_value,
+    g.exam_call
+FROM v_students st
+LEFT JOIN grades g ON st.student_id = g.student_id;--LEFT JOIN INCLUYE TODAS LAS FILAS DE LA
+--TABLA A LA IZQUIERDA
