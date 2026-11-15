@@ -259,3 +259,15 @@ JOIN groups gr ON s.subject_id = gr.subject_id
 JOIN students_groups ge ON gr.group_id = ge.group_id
 JOIN students st ON ge.student_id = st.student_id
 JOIN people p ON st.student_id = p.person_id;
+
+--USO DE LAS VISTAS
+-- Consulta 28: Total de matrículas de honor
+SELECT COUNT(*) AS total_honors
+FROM v_grades_with_honors;
+
+--AGREGACION SOBRE VISTAS
+-- Consulta 29: Nota media de cada estudiante
+SELECT v.first_name, v.last_name, AVG(v.grade_value) AS average_grade
+FROM v_student_grades v
+GROUP BY v.person_id, v.first_name, v.last_name;
+
