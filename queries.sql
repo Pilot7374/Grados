@@ -491,3 +491,65 @@ JOIN groups gr ON s.subject_id = gr.subject_id
 JOIN grades g ON gr.group_id = g.group_id
 GROUP BY s.subject_id, s.subject_name
 HAVING AVG(g.grade_value) > 5.5;
+
+--COMBINACION DE CONSULTAS COMPLEJAS
+-- Consulta 55: Top 3 asignaturas con más estudiantes en 2024
+SELECT 
+    s.subject_name,
+    COUNT(DISTINCT ge.student_id) AS total_students
+FROM subjects s
+JOIN groups gr ON s.subject_id = gr.subject_id
+JOIN students_groups ge ON gr.group_id = ge.group_id
+WHERE gr.academic_year = 2024
+GROUP BY s.subject_id, s.subject_name
+ORDER BY total_students DESC, s.subject_name ASC
+LIMIT 3;
+-- Consulta 56: Estudiantes con más de 1 matrícula de honor
+SELECT 
+    st.first_name,
+    st.last_name,
+    COUNT(*) AS total_honors
+FROM v_students st
+JOIN grades g ON st.student_id = g.student_id
+WHERE g.with_honors = 1
+GROUP BY st.student_id, st.first_name, st.last_name
+HAVING COUNT(*) > 1;
+-- Consulta 57: Grados con más estudiantes en 2024
+SELECT 
+    d.degree_name,
+    COUNT(DISTINCT ge.student_id) AS total_students
+FROM degrees d
+JOIN subjects s ON d.degree_id = s.degree_id
+JOIN groups gr ON s.subject_id = gr.subject_id
+JOIN students_groups ge ON gr.group_id = ge.group_id
+WHERE gr.academic_year = 2024
+GROUP BY d.degree_id, d.degree_name
+ORDER BY COUNT(DISTINCT ge.student_id) DESC;
+-- Consulta 58: Nota máxima de cada estudiante con nombre y apellidos
+SELECT 
+    st.first_name,
+    st.last_name,
+    MAX(g.grade_value) AS max_grade
+FROM v_students st
+JOIN grades g ON st.student_id = g.student_id
+GROUP BY st.student_id, st.first_name, st.last_name
+ORDER BY MAX(g.grade_value) DESC;
+-- Consulta 59: Profesores que imparten en más de 1 grupo
+SELECT 
+    pr.first_name,
+    pr.last_name,
+    COUNT(DISTINCT tl.group_id) AS total_groups
+FROM v_professors pr
+JOIN teaching_loads tl ON pr.professor_id = tl.professor_id
+GROUP BY pr.professor_id, pr.first_name, pr.last_name
+HAVING COUNT(DISTINCT tl.group_id) > 1;
+-- Consulta 60: Asignaturas que pertenecen a grados con más de 15 asignaturas
+SELECT DISTINCT s.subject_name, d.degree_name
+FROM subjects s
+JOIN degrees d ON s.degree_id = d.degree_id
+WHERE d.degree_id IN (
+    SELECT degree_id
+    FROM subjects
+    GROUP BY degree_id
+    HAVING COUNT(*) > 15
+);
