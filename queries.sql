@@ -271,3 +271,42 @@ SELECT v.first_name, v.last_name, AVG(v.grade_value) AS average_grade
 FROM v_student_grades v
 GROUP BY v.person_id, v.first_name, v.last_name;
 
+--CONTROL DE SALIDA
+--ORDEN
+-- Consulta 30: Notas ordenadas por valor (de menor a mayor)
+SELECT g.grade_id, g.student_id, g.grade_value, g.exam_call
+FROM grades g
+ORDER BY g.grade_value ASC;
+
+-- Consulta 31: Notas ordenadas por valor descendente
+SELECT g.grade_id, g.student_id, g.grade_value, g.exam_call
+FROM grades g
+ORDER BY g.grade_value DESC;
+--LIMITACION
+-- Consulta 32: Las 5 mejores notas
+SELECT g.grade_id, g.student_id, g.grade_value, g.exam_call
+FROM grades g
+ORDER BY g.grade_value DESC
+LIMIT 5;
+--ORDENACION MULTIPLE
+-- Consulta 33: Notas aprobadas ordenadas por estudiante
+SELECT 
+    st.first_name,
+    st.last_name,
+    g.grade_value,
+    g.exam_call
+FROM grades g
+JOIN v_students st ON g.student_id = st.student_id
+WHERE g.grade_value >= 5
+ORDER BY st.last_name ASC, st.first_name ASC;
+--PAGINACION
+-- Consulta 34: Paginación - Segunda página de 5 notas
+SELECT g.grade_id, g.student_id, g.grade_value
+FROM grades g
+ORDER BY g.grade_value DESC
+LIMIT 5 OFFSET 5; --OFFSET SALTA LAS 5 PRIMERAS FILAS
+-- Consulta 35: Tercera página de 5 notas
+SELECT g.grade_id, g.student_id, g.grade_value
+FROM grades g
+ORDER BY g.grade_value DESC
+LIMIT 5 OFFSET 10;
