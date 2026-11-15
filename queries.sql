@@ -138,7 +138,7 @@ FROM subjects s;
 -- Consulta 19: Años académicos registrados
 SELECT DISTINCT g.academic_year
 FROM groups g
-ORDER BY g.academic_year DESC; --ORDER BY = ordenado de forma descendente
+ORDER BY g.academic_year DESC; --ORDER BY = menor a mayor por defecto
 
 --SUBCONSULTAS
 
@@ -176,7 +176,21 @@ SELECT s.subject_name
 FROM subjects s
 WHERE s.subject_name LIKE 'Fundamentos%';
 
+-- el % es lo que lo sigue o precede
+
 -- Consulta 25: Personas con nombres de 5 letras (usar 5 guiones bajos)
 SELECT p.first_name, p.last_name
 FROM people p
 WHERE p.first_name LIKE '_____';
+
+-- FILTRO CON FECHAS 
+-- Consulta 26: Grupos del año 2024
+SELECT g.group_name, g.activity, g.academic_year
+FROM groups g
+WHERE g.academic_year = 2024;
+
+-- Consulta 27: Grupos entre 2020 y 2023
+SELECT g.group_name, g.activity, g.academic_year
+FROM groups g
+WHERE g.academic_year BETWEEN 2020 AND 2023
+ORDER BY g.academic_year;
