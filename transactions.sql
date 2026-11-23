@@ -62,3 +62,55 @@ SET AUTOCOMMIT = 1;
 
 -- La nota sigue ahí
 SELECT * FROM grades WHERE student_id = 6 AND exam_call = 'Extraordinaria';
+
+
+
+-- La tercera nota viola ck_grades_rn11_value: MariaDB deshace solo esa sentencia,
+-- la transacción sigue abierta y, si el script llega al COMMIT, confirma las otras dos
+CALL p_populate();
+
+START TRANSACTION;
+
+INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+VALUES (6, 1, 4.5, 'Extraordinaria', 0);
+INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+VALUES (7, 1, 7.5, 'Extraordinaria', 0);
+INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+VALUES (8, 1, -7.5, 'Extraordinaria', 0);
+
+COMMIT;
+
+-- Quedan las dos primeras notas
+SELECT * FROM grades
+WHERE student_id IN (6, 7, 8) AND exam_call = 'Extraordinaria';
+
+
+-- Las tres notas, todas o ninguna: un bloque anónimo con un manejador de errores
+-- deshace la transacción ante el primer error y lo relanza (RESIGNAL)
+CALL p_populate();
+
+DELIMITER //
+BEGIN NOT ATOMIC
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+    VALUES (6, 1, 4.5, 'Extraordinaria', 0);
+    INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+    VALUES (7, 1, 7.5, 'Extraordinaria', 0);
+    INSERT INTO grades (student_id, group_id, grade_value, exam_call, with_honors)
+    VALUES (8, 1, -7.5, 'Extraordinaria', 0);
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- No queda ninguna de las tres notas
+SELECT * FROM grades
+WHERE student_id IN (6, 7, 8) AND exam_call = 'Extraordinaria';
+

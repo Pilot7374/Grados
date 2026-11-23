@@ -163,3 +163,15 @@ CREATE TABLE teaching_loads (
 ALTER TABLE teaching_loads
     ADD CONSTRAINT ck_teaching_loads_credits CHECK (credits > 0);
 
+
+
+CREATE TABLE students_subjects (
+    student_subject_id INT AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    PRIMARY KEY (student_subject_id),
+    CONSTRAINT uq_students_subjects UNIQUE (student_id, subject_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+);
+

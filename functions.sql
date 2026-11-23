@@ -135,3 +135,54 @@ BEGIN
     RETURN v_count >= 1;
 END//
 DELIMITER ;
+DELIMITER //
+-- RN06: indica si la asignatura ya tiene en ese año académico el máximo de
+-- grupos de la actividad (uno de teoría o dos de laboratorio).
+-- La usa el trigger t_biu_groups_rn06
+CREATE OR REPLACE FUNCTION f_subject_group_limit_reached(
+    p_subject_id INT,
+    p_activity VARCHAR(15),
+    p_academic_year YEAR
+)
+RETURNS BOOLEAN
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE v_count INT;
+    DECLARE v_result BOOLEAN DEFAULT FALSE;
+
+    -- Grupos que ya tiene la asignatura de esa actividad en ese año
+    SELECT COUNT(*) INTO v_count
+    FROM groups
+    WHERE subject_id = p_subject_id
+      AND activity = p_activity
+      AND academic_year = p_academic_year;
+
+    -- El máximo depende de la actividad
+    IF p_activity = 'Teoría' THEN
+        SET v_result = (v_count >= 1);
+    ELSEIF p_activity = 'Laboratorio' THEN
+        SET v_result = (v_count >= 2);
+    END IF;
+
+    RETURN v_result;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE OR REPLACE FUNCTION f_is_student_enrolled(
+    p_student_id INT,
+    p_subject_id INT
+)
+RETURNS BOOLEAN
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE v_exists INT;
+    SELECT COUNT(*) INTO v_exists
+    FROM students_subjects
+    WHERE student_id = p_student_id
+      AND subject_id = p_subject_id;
+    RETURN v_exists > 0;
+END//
+DELIMITER ;
